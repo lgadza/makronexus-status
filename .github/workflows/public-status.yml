@@ -1,27 +1,10 @@
 name: Public Status Monitor
 
+# Automatic runs are temporarily paused because this account's standard
+# GitHub-hosted runner is failing before job startup. The public site is
+# published from the gh-pages branch until runner execution is restored.
 on:
-  schedule:
-    - cron: "*/5 * * * *"
   workflow_dispatch:
-  pull_request:
-    paths:
-      - "config.mjs"
-      - "content/**"
-      - "data/**"
-      - "public/**"
-      - "scripts/**"
-      - ".github/workflows/public-status.yml"
-  push:
-    branches:
-      - main
-    paths:
-      - "config.mjs"
-      - "content/**"
-      - "data/**"
-      - "public/**"
-      - "scripts/**"
-      - ".github/workflows/public-status.yml"
 
 concurrency:
   group: public-status-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'production' }}
