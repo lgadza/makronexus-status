@@ -4,105 +4,157 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#07111f" />
-    <meta name="description" content="Independent service status for Makronexus Education." />
-    <title>Makronexus Status</title>
+    <meta name="theme-color" content="#ffffff" />
+    <meta
+      name="description"
+      content="Independent service status for Makronexus Education."
+    />
+    <title>Makronexus System Status</title>
     <link rel="icon" href="./assets/mn-logo.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./assets/styles.css" />
   </head>
   <body>
     <header class="site-header">
       <div class="shell header-inner">
-        <a class="brand" href="https://www.makronexus.com" rel="noreferrer" aria-label="Makronexus">
-          <img class="brand-wordmark" src="./assets/mn-wordmark.svg" alt="Makronexus" />
+        <a
+          class="brand"
+          href="https://www.makronexus.com"
+          rel="noreferrer"
+          aria-label="Makronexus"
+        >
+          <img
+            class="brand-wordmark"
+            src="./assets/mn-wordmark.svg"
+            alt="Makronexus"
+          />
           <span class="brand-divider" aria-hidden="true"></span>
           <span class="brand-product">System Status</span>
         </a>
-        <span class="independent-badge"><span class="independent-dot" aria-hidden="true"></span>Independent status page</span>
+
+        <div class="header-actions">
+          <a
+            class="button button-secondary"
+            href="mailto:support@makronexus.com?subject=Makronexus%20incident%20updates"
+          >
+            Request incident updates
+          </a>
+          <a
+            class="button button-primary"
+            href="mailto:support@makronexus.com?subject=Makronexus%20support"
+          >
+            Contact support
+          </a>
+        </div>
       </div>
     </header>
 
-    <main class="shell main-content">
-      <section class="hero" aria-labelledby="status-heading">
-        <div class="hero-copy">
-          <div class="hero-brandline">
-            <img class="hero-mark" src="./assets/mn-logo.svg" alt="" aria-hidden="true" />
-            <p class="eyebrow">Makronexus Education</p>
-          </div>
-          <h1 id="status-heading">Service status</h1>
-          <p class="lead">Independent availability and incident reporting for the Makronexus Education platform.</p>
+    <main class="shell page">
+      <section id="overall-panel" class="overall-panel status-unknown" aria-live="polite">
+        <div class="overall-icon" aria-hidden="true">•</div>
+        <div class="overall-copy">
+          <p class="eyebrow">Makronexus Education</p>
+          <h1 id="overall-title">Checking platform status…</h1>
+          <p id="overall-message">
+            Live checks are establishing the current availability of Makronexus Education.
+          </p>
         </div>
-        <div id="last-checked" class="last-checked" aria-live="polite">Loading current status…</div>
+        <div id="last-checked" class="last-checked">Starting live checks…</div>
       </section>
 
-      <section id="overall" class="overall-panel" aria-live="polite">
-        <div class="skeleton-line wide"></div>
-        <div class="skeleton-line"></div>
-      </section>
-
-      <section class="section" aria-labelledby="components-heading">
-        <div class="section-heading">
+      <section class="status-card" aria-labelledby="system-status-heading">
+        <div class="card-heading">
           <div>
-            <p class="eyebrow">Current availability</p>
-            <h2 id="components-heading">Services</h2>
+            <p class="section-kicker">Live and observed availability</p>
+            <h2 id="system-status-heading">System status</h2>
           </div>
-          <p>Only services backed by real monitoring are shown.</p>
-        </div>
-        <div id="components" class="component-list" aria-live="polite"></div>
-      </section>
-
-      <section id="reliability-section" class="section" aria-labelledby="reliability-heading">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Observed reliability</p>
-            <h2 id="reliability-heading">Availability history</h2>
+          <div class="history-period" aria-label="History period">
+            <span>Current + observed history</span>
           </div>
-          <p>Calculated from independent external observations, not application process uptime.</p>
         </div>
-        <div id="uptime" class="uptime-grid"></div>
+
+        <div id="service-list" class="service-list" aria-live="polite"></div>
+
+        <div class="status-legend" aria-label="Status legend">
+          <span><i class="legend-dot operational"></i>Operational</span>
+          <span><i class="legend-dot degraded"></i>Degraded</span>
+          <span><i class="legend-dot outage"></i>Outage</span>
+          <span><i class="legend-dot unknown"></i>Not yet observed</span>
+        </div>
       </section>
 
-      <section id="maintenance-section" class="section" aria-labelledby="maintenance-heading" hidden>
-        <div class="section-heading">
+      <section id="active-incident-section" class="incident-card" hidden aria-labelledby="active-incident-heading">
+        <div class="card-heading compact">
           <div>
-            <p class="eyebrow">Planned work</p>
+            <p class="section-kicker">Current incident</p>
+            <h2 id="active-incident-heading">Service disruption</h2>
+          </div>
+          <span id="active-incident-status" class="incident-badge">Investigating</span>
+        </div>
+        <div id="active-incident-body"></div>
+      </section>
+
+      <div class="lower-grid">
+        <section class="timeline-card" aria-labelledby="incidents-heading">
+          <div class="card-heading compact">
+            <div>
+              <p class="section-kicker">Transparency</p>
+              <h2 id="incidents-heading">Recent incidents</h2>
+            </div>
+          </div>
+          <div id="incidents" class="timeline"></div>
+        </section>
+
+        <section class="continuity-card" aria-labelledby="continuity-heading">
+          <div class="card-heading compact">
+            <div>
+              <p class="section-kicker">ERP continuity</p>
+              <h2 id="continuity-heading">Keep school operations moving</h2>
+            </div>
+          </div>
+          <div id="continuity-guidance" class="guidance-list"></div>
+        </section>
+      </div>
+
+      <section id="maintenance-section" class="timeline-card" hidden aria-labelledby="maintenance-heading">
+        <div class="card-heading compact">
+          <div>
+            <p class="section-kicker">Planned work</p>
             <h2 id="maintenance-heading">Scheduled maintenance</h2>
           </div>
         </div>
         <div id="maintenance" class="timeline"></div>
       </section>
 
-      <section class="section" aria-labelledby="incidents-heading">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Transparency</p>
-            <h2 id="incidents-heading">Incident history</h2>
-          </div>
-          <p>Automatic monitoring updates can be supplemented by Platform Operations.</p>
-        </div>
-        <div id="incidents" class="timeline" aria-live="polite"></div>
-      </section>
-
       <aside class="integrity-note">
-        <strong>Availability and data integrity are separate.</strong>
-        <p>Service recovery does not automatically prove that no data loss occurred. Where relevant, incident updates will state the verified data-integrity position separately.</p>
+        <div class="integrity-mark" aria-hidden="true">i</div>
+        <div>
+          <strong>Availability and data integrity are assessed separately.</strong>
+          <p>
+            Service recovery does not automatically prove that no data loss occurred.
+            Incident updates will state the verified data-integrity position separately when relevant.
+          </p>
+        </div>
       </aside>
     </main>
 
     <footer class="site-footer">
       <div class="shell footer-inner">
         <div class="footer-brand">
-          <img class="footer-wordmark" src="./assets/mn-wordmark.svg" alt="Makronexus" />
+          <img
+            class="footer-wordmark"
+            src="./assets/mn-wordmark.svg"
+            alt="Makronexus"
+          />
           <p>The Standard for Zimbabwean Schools.</p>
         </div>
-        <div class="footer-links">
+        <nav class="footer-links" aria-label="Footer">
           <a href="https://education.makronexus.com">Makronexus Education</a>
           <a href="mailto:support@makronexus.com">Support</a>
-        </div>
+        </nav>
       </div>
     </footer>
 
-    <noscript>This status page requires JavaScript to load the latest monitoring data.</noscript>
+    <noscript>This status page requires JavaScript to load live monitoring data.</noscript>
     <script src="./assets/app.js" defer></script>
   </body>
 </html>
