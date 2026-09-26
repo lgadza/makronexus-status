@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-26T01:09:07Z",
+  "status": "unknown",
+  "components": [
+    {
+      "id": "web-application",
+      "name": "Web application",
+      "description": "Access to the Makronexus Education web experience.",
+      "status": "unknown"
+    },
+    {
+      "id": "api-sign-in",
+      "name": "API & sign-in",
+      "description": "Core API availability and the public sign-in verification substrate.",
+      "status": "unknown"
+    },
+    {
+      "id": "core-services",
+      "name": "Core school services",
+      "description": "Application services used for day-to-day school operations.",
+      "status": "unknown"
+    },
+    {
+      "id": "school-data",
+      "name": "School data services",
+      "description": "Availability of school records and transactional data.",
+      "status": "unknown"
+    },
+    {
+      "id": "background-processing",
+      "name": "Background processing",
+      "description": "Shared queue and session infrastructure used by background work.",
+      "status": "unknown"
+    },
+    {
+      "id": "file-services",
+      "name": "Files & documents",
+      "description": "Persistent file and document storage used by the platform.",
+      "status": "unknown"
+    }
+  ],
+  "activeMaintenance": [],
+  "dataIntegrity": {
+    "status": "not-assessed",
+    "message": "Availability monitoring does not determine whether data loss occurred. Data integrity is assessed separately during incident response."
+  }
+}
