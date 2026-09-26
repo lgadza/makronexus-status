@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#07111f" />
+    <meta name="description" content="Independent service status for Makronexus Education." />
+    <title>Makronexus Status</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="https://www.makronexus.com" rel="noreferrer">
+          <span class="brand-mark" aria-hidden="true">M</span>
+          <span>
+            <strong>Makronexus</strong>
+            <small>System Status</small>
+          </span>
+        </a>
+        <span class="independent-badge">Independent monitoring</span>
+      </div>
+    </header>
+
+    <main class="shell main-content">
+      <section class="hero" aria-labelledby="status-heading">
+        <div>
+          <p class="eyebrow">Makronexus Education</p>
+          <h1 id="status-heading">Service status</h1>
+          <p class="lead">A public view of the services supporting day-to-day school operations.</p>
+        </div>
+        <div id="last-checked" class="last-checked" aria-live="polite">Loading current status…</div>
+      </section>
+
+      <section id="overall" class="overall-panel" aria-live="polite">
+        <div class="skeleton-line wide"></div>
+        <div class="skeleton-line"></div>
+      </section>
+
+      <section class="section" aria-labelledby="components-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Current availability</p>
+            <h2 id="components-heading">Services</h2>
+          </div>
+          <p>Only services backed by real monitoring are shown.</p>
+        </div>
+        <div id="components" class="component-list" aria-live="polite"></div>
+      </section>
+
+      <section class="section" aria-labelledby="reliability-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Observed reliability</p>
+            <h2 id="reliability-heading">Availability history</h2>
+          </div>
+          <p>Calculated from independent external observations, not application process uptime.</p>
+        </div>
+        <div id="uptime" class="uptime-grid"></div>
+      </section>
+
+      <section id="maintenance-section" class="section" aria-labelledby="maintenance-heading" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Planned work</p>
+            <h2 id="maintenance-heading">Scheduled maintenance</h2>
+          </div>
+        </div>
+        <div id="maintenance" class="timeline"></div>
+      </section>
+
+      <section class="section" aria-labelledby="incidents-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Transparency</p>
+            <h2 id="incidents-heading">Incident history</h2>
+          </div>
+          <p>Automatic monitoring updates can be supplemented by Platform Operations.</p>
+        </div>
+        <div id="incidents" class="timeline" aria-live="polite"></div>
+      </section>
+
+      <aside class="integrity-note">
+        <strong>Availability and data integrity are separate.</strong>
+        <p>Service recovery does not automatically prove that no data loss occurred. Where relevant, incident updates will state the verified data-integrity position separately.</p>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div>
+          <strong>Makronexus</strong>
+          <p>School operations with clarity, continuity and accountability.</p>
+        </div>
+        <div class="footer-links">
+          <a href="https://education.makronexus.com">Makronexus Education</a>
+          <a href="mailto:support@makronexus.com">Support</a>
+        </div>
+      </div>
+    </footer>
+
+    <noscript>This status page requires JavaScript to load the latest monitoring data.</noscript>
+    <script src="./assets/app.js" defer></script>
+  </body>
+</html>
