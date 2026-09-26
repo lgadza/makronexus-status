@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "status": "unknown",
+  "generatedAt": "2026-09-26T01:09:07Z",
+  "components": [
+    {
+      "id": "web-application",
+      "name": "Web application",
+      "status": "unknown"
+    },
+    {
+      "id": "api-sign-in",
+      "name": "API & sign-in",
+      "status": "unknown"
+    },
+    {
+      "id": "core-services",
+      "name": "Core school services",
+      "status": "unknown"
+    },
+    {
+      "id": "school-data",
+      "name": "School data services",
+      "status": "unknown"
+    },
+    {
+      "id": "background-processing",
+      "name": "Background processing",
+      "status": "unknown"
+    },
+    {
+      "id": "file-services",
+      "name": "Files & documents",
+      "status": "unknown"
+    }
+  ]
+}
