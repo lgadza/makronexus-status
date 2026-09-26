@@ -1,0 +1,143 @@
+name: Public Status Monitor
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "config.mjs"
+      - "content/**"
+      - "data/**"
+      - "public/**"
+      - "scripts/**"
+      - ".github/workflows/public-status.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "config.mjs"
+      - "content/**"
+      - "data/**"
+      - "public/**"
+      - "scripts/**"
+      - ".github/workflows/public-status.yml"
+
+concurrency:
+  group: public-status-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'production' }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Verify monitor state machine
+        run: node scripts/self-test.mjs
+
+      - name: Run live status check
+        run: node scripts/check.mjs
+
+      - name: Validate public contract
+        run: node scripts/validate.mjs
+
+      - name: Build static status site
+        run: node scripts/build.mjs
+
+  monitor-and-build:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    steps:
+      - name: Checkout production source
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Restore persistent monitoring history
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git ls-remote --exit-code --heads origin status-data >/dev/null 2>&1; then
+            git fetch origin status-data
+            for file in state.json history.json incidents.json uptime.json; do
+              if git cat-file -e "origin/status-data:data/${file}" 2>/dev/null; then
+                git show "origin/status-data:data/${file}" > "data/${file}"
+              fi
+            done
+          fi
+
+      - name: Probe production services
+        run: node scripts/check.mjs
+
+      - name: Validate public contract
+        run: node scripts/validate.mjs
+
+      - name: Build static status site
+        run: node scripts/build.mjs
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+      - name: Preserve monitoring history
+        shell: bash
+        run: |
+          set -euo pipefail
+          temp_dir="$(mktemp -d)"
+          cp data/state.json "${temp_dir}/state.json"
+          cp data/history.json "${temp_dir}/history.json"
+          cp data/incidents.json "${temp_dir}/incidents.json"
+          cp data/uptime.json "${temp_dir}/uptime.json"
+
+          git config user.name "makronexus-status-bot"
+          git config user.email "status-bot@users.noreply.github.com"
+
+          if git ls-remote --exit-code --heads origin status-data >/dev/null 2>&1; then
+            git fetch origin status-data
+            git switch -C status-data origin/status-data
+          else
+            git switch --orphan status-data
+            git rm -rf . >/dev/null 2>&1 || true
+          fi
+
+          mkdir -p data
+          cp "${temp_dir}/state.json" data/state.json
+          cp "${temp_dir}/history.json" data/history.json
+          cp "${temp_dir}/incidents.json" data/incidents.json
+          cp "${temp_dir}/uptime.json" data/uptime.json
+          git add data/state.json data/history.json data/incidents.json data/uptime.json
+
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(status): persist monitoring history"
+            git push origin status-data
+          fi
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: monitor-and-build
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
