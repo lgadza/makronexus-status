@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": null,
+  "periods": {
+    "30d": { "observedFrom": null, "overall": null, "components": {} },
+    "90d": { "observedFrom": null, "overall": null, "components": {} }
+  }
+}
