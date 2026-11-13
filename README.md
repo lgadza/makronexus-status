@@ -14,6 +14,7 @@ This repository contains only the public monitoring surface, sanitized status hi
 
 ```bash
 node scripts/self-test.mjs
+node scripts/check-ui-contract.mjs
 node scripts/check.mjs
 node scripts/validate.mjs
 node scripts/build.mjs
