@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = resolve(import.meta.dirname, "..");
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const html = readFileSync(resolve(root, "public/index.html"), "utf8");
 const css = readFileSync(resolve(root, "public/assets/styles.css"), "utf8");
 const js = readFileSync(resolve(root, "public/assets/app.js"), "utf8");
