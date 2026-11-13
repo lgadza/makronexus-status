@@ -903,3 +903,416 @@ a {
     transition: none !important;
   }
 }
+
+/* Light editorial presentation. Status colors identify actual health, not decorative panels. */
+:root {
+  --ink: #0b1f23;
+  --muted: #566a6d;
+  --muted-2: #77898b;
+  --line: #dce5e5;
+  --line-strong: #b9c9ca;
+  --surface: #ffffff;
+  --page: #fafaf8;
+  --brand-deep: #0b6770;
+  --green: #137447;
+  --amber: #936012;
+  --red: #b42318;
+}
+
+html,
+body {
+  background: var(--page);
+}
+
+.shell {
+  width: min(100% - 48px, 1180px);
+}
+
+.site-header {
+  background: rgba(250, 250, 248, 0.96);
+  border-bottom-color: var(--line);
+  backdrop-filter: none;
+}
+
+.site-header::before,
+.overall-panel::after {
+  content: none;
+}
+
+.header-inner {
+  min-height: 68px;
+}
+
+.brand-product {
+  font-weight: 600;
+}
+
+.button {
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  padding-inline: 20px;
+  box-shadow: none;
+  transform: none;
+}
+
+.button:hover {
+  transform: none;
+}
+
+.button-primary {
+  color: #fff;
+  border-color: var(--ink);
+  background: var(--ink);
+}
+
+.button-primary:hover {
+  background: #244247;
+}
+
+.button-secondary {
+  background: transparent;
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.page {
+  padding-block: 84px 92px;
+}
+
+.overall-panel,
+.overall-panel.status-operational,
+.overall-panel.status-degraded,
+.overall-panel.status-maintenance,
+.overall-panel.status-outage {
+  min-height: 0;
+  align-items: start;
+  gap: 20px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  padding: 0 0 56px;
+  box-shadow: none;
+}
+
+.overall-icon {
+  width: 44px;
+  height: 44px;
+  font-size: 28px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--line-strong);
+  box-shadow: none;
+}
+
+.status-operational .overall-icon {
+  background: transparent;
+  border-color: #8fc9b0;
+  color: var(--green);
+}
+
+.status-degraded .overall-icon,
+.status-maintenance .overall-icon {
+  background: transparent;
+  border-color: #d9b978;
+  color: var(--amber);
+}
+
+.status-outage .overall-icon {
+  background: transparent;
+  border-color: #e4a5a0;
+  color: var(--red);
+}
+
+.eyebrow,
+.section-kicker {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.13em;
+}
+
+.overall-copy h1 {
+  max-width: 840px;
+  margin: 11px 0 15px;
+  font-size: clamp(32px, 4.6vw, 54px);
+  line-height: 1.06;
+  font-weight: 600;
+  letter-spacing: -0.046em;
+}
+
+.overall-copy p:last-child {
+  max-width: 760px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.last-checked {
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.status-card,
+.timeline-card,
+.continuity-card,
+.incident-card {
+  margin-top: 62px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.card-heading,
+.card-heading.compact {
+  min-height: 0;
+  gap: 14px;
+  padding: 0 0 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.card-heading h2 {
+  margin-top: 8px;
+  font-size: clamp(24px, 2.7vw, 32px);
+  line-height: 1.18;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.history-period {
+  min-height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.service-row {
+  min-height: 100px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+
+.service-name strong {
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.service-name span {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.service-status-icon {
+  background: transparent;
+  border: 1px solid var(--line);
+}
+
+.service-status-icon.operational {
+  background: transparent;
+  border-color: #8fc9b0;
+  color: var(--green);
+}
+
+.service-status-icon.degraded,
+.service-status-icon.maintenance {
+  background: transparent;
+  border-color: #d9b978;
+  color: var(--amber);
+}
+
+.service-status-icon.outage {
+  background: transparent;
+  border-color: #e4a5a0;
+  color: var(--red);
+}
+
+.history-bar {
+  height: 22px;
+  border-radius: 1px;
+}
+
+.service-summary strong {
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.service-summary span {
+  font-size: 11px;
+}
+
+.status-legend {
+  border-top: 1px solid var(--line);
+  padding: 18px 0;
+  gap: 20px;
+  font-size: 12px;
+}
+
+.lower-grid {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 68px;
+}
+
+.timeline,
+.guidance-list {
+  min-height: 0;
+}
+
+.timeline-empty,
+.timeline-item,
+.active-incident-content {
+  padding: 20px 0;
+}
+
+.timeline-item,
+.guidance-item {
+  border-top-color: var(--line);
+}
+
+.timeline-title strong {
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.timeline-meta {
+  font-size: 12px;
+}
+
+.timeline-copy {
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.guidance-button {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  padding: 20px 0;
+}
+
+.guidance-icon {
+  display: none;
+}
+
+.guidance-copy strong {
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.guidance-copy span {
+  margin-top: 6px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.guidance-detail {
+  padding: 0 22px 20px 0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.affected-chip,
+.incident-badge {
+  border-radius: 0;
+  font-weight: 600;
+}
+
+.integrity-note {
+  gap: 14px;
+  margin-top: 60px;
+  padding: 22px 0 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+}
+
+.integrity-mark {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+}
+
+.integrity-note strong {
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.integrity-note p {
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.site-footer {
+  background: var(--page);
+}
+
+.footer-links a,
+.footer-brand p {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+@media (max-width: 860px) {
+  .lower-grid {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 720px) {
+  .shell {
+    width: min(100% - 36px, 1180px);
+  }
+
+  .page {
+    padding-block: 52px 60px;
+  }
+
+  .overall-panel {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 13px;
+    padding-bottom: 36px;
+  }
+
+  .overall-copy h1 {
+    font-size: clamp(30px, 7.4vw, 44px);
+  }
+
+  .last-checked {
+    padding-left: 0;
+  }
+
+  .status-card,
+  .timeline-card,
+  .continuity-card,
+  .incident-card {
+    margin-top: 44px;
+  }
+
+  .service-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px;
+    padding: 18px 0;
+  }
+
+  .card-heading,
+  .card-heading.compact {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .service-row,
+  .guidance-button {
+    transition: none;
+  }
+}
