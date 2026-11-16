@@ -29,5 +29,10 @@ assert(css.includes("@media (max-width: 720px)"), "Mobile layout is missing");
 assert(css.includes("@media (prefers-reduced-motion: reduce)"), "Motion fallback is missing");
 assert(js.includes("LIVE_REFRESH_MS"), "Live checks must remain active");
 assert(js.includes("PROBE_SEEN_PREFIX"), "Safe observation behaviour must remain active");
+assert(js.includes("getRemoteJson(LIVE_WEB_PROBE_URL)"), "Web status requires verifiable JSON probe");
+assert(js.includes("Stale web probe response"), "Web status must reject stale probes");
+assert(!js.includes("mode: 'no-cors'"), "Opaque no-cors requests must never count as operational");
+assert(!js.includes("LIVE_WEB_REACHABILITY_FALLBACK_URL"), "Circular public-status proxy is not a web availability probe");
+
 
 process.stdout.write("Status page editorial contract passed.\n");
