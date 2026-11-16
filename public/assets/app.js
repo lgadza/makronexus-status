@@ -1,5 +1,4 @@
 const LIVE_WEB_PROBE_URL = 'https://education.makronexus.com/api/status-probe';
-const LIVE_WEB_REACHABILITY_FALLBACK_URL = 'https://education.makronexus.com/api/platform-status';
 const LIVE_API_STATUS_URL = 'https://api.makronexus.com/status.json';
 const LIVE_REFRESH_MS = 60_000;
 const LIVE_TIMEOUT_MS = 8_000;
@@ -185,36 +184,18 @@ async function getRemoteJson(url) {
 }
 
 async function probeWebApplication() {
-  try {
-    const payload = await getRemoteJson(LIVE_WEB_PROBE_URL);
-    if (payload?.schemaVersion !== 1 || payload?.status !== 'operational') {
-      throw new Error('Invalid web probe contract');
-    }
-    return payload;
-  } catch {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), LIVE_TIMEOUT_MS);
-
-    try {
-      await fetch(
-        `${LIVE_WEB_REACHABILITY_FALLBACK_URL}?reachability=${Date.now()}`,
-        {
-          cache: 'no-store',
-          mode: 'no-cors',
-          signal: controller.signal,
-        },
-      );
-
-      return {
-        schemaVersion: 1,
-        status: 'operational',
-        generatedAt: new Date().toISOString(),
-        reachabilityOnly: true,
-      };
-    } finally {
-      clearTimeout(timer);
-    }
+  // A cross-origin response must be verified. A no-cors/opaque fetch only
+  // demonstrates that the browser dispatched a request; it cannot establish
+  // HTTP success or system health and must never produce operational status.
+  const payload = await getRemoteJson(LIVE_WEB_PROBE_URL);
+  if (payload?.schemaVersion !== 1 || payload?.status !== 'operational') {
+    throw new Error('Invalid web probe contract');
   }
+  const timestamp = Date.parse(payload.generatedAt);
+  if (!Number.isFinite(timestamp) || Math.abs(Date.now() - timestamp) > 5 * 60_000) {
+    throw new Error('Stale web probe response');
+  }
+  return payload;
 }
 
 function worstStatus(statuses) {
